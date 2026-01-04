@@ -1,15 +1,20 @@
 const buttonsEl = document.querySelectorAll("button");
-
 const inputFieldEl = document.getElementById("result");
 
 for (let i = 0; i < buttonsEl.length; i++) {
   buttonsEl[i].addEventListener("click", () => {
     const buttonValue = buttonsEl[i].textContent;
-    if (buttonValue === "C") {
+
+    if (buttonValue === "AC") {
       clearResult();
-    } else if (buttonValue === "=") {
+    } 
+    else if (buttonValue === "backspace") {
+      backspace();
+    } 
+    else if (buttonValue === "=") {
       calculateResult();
-    } else {
+    } 
+    else {
       appendValue(buttonValue);
     }
   });
@@ -19,11 +24,18 @@ function clearResult() {
   inputFieldEl.value = "";
 }
 
+function backspace() {
+  inputFieldEl.value = inputFieldEl.value.slice(0, -1);
+}
+
 function calculateResult() {
-  inputFieldEl.value = eval(inputFieldEl.value);
+  try {
+    inputFieldEl.value = eval(inputFieldEl.value);
+  } catch {
+    inputFieldEl.value = "Error";
+  }
 }
 
 function appendValue(buttonValue) {
   inputFieldEl.value += buttonValue;
-  //   inputFieldEl.value = inputFieldEl.value + buttonValue;
 }
